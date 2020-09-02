@@ -1,5 +1,8 @@
 package edu.tcu.cs.hw1problem5.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
@@ -11,7 +14,13 @@ public class User implements Serializable {
     private String id;
     private String name;
 //    private String walletId;
+
+    @OneToMany(cascade = CascadeType.ALL,mappedBy="owner")
+    @JsonIgnore
+    private List<Product> productsOwned = new ArrayList<>();
+
     @OneToOne
+    @JsonIgnore
     private Wallet wallet;
 
 

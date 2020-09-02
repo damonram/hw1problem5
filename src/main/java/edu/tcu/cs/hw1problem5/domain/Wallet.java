@@ -1,5 +1,7 @@
 package edu.tcu.cs.hw1problem5.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
@@ -16,6 +18,7 @@ public class Wallet implements Serializable {
     private String status;
 
     @OneToOne
+    @JsonIgnore
     private User owner;
 
     public Wallet() {
