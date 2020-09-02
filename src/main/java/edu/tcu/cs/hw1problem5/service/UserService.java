@@ -1,6 +1,8 @@
 package edu.tcu.cs.hw1problem5.service;
 
+import edu.tcu.cs.hw1problem5.dao.ProductDao;
 import edu.tcu.cs.hw1problem5.dao.UserDao;
+import edu.tcu.cs.hw1problem5.domain.Product;
 import edu.tcu.cs.hw1problem5.domain.User;
 import edu.tcu.cs.hw1problem5.utils.IdWorker;
 import org.springframework.stereotype.Service;
@@ -14,11 +16,15 @@ public class UserService {
 
     private UserDao userDao;
     private IdWorker idWorker;
+    private ProductDao productDao;
 
     //Spring will automatically inject an instance of UserDao and IdWorker into this class
-    public UserService(UserDao userDao, IdWorker idWorker) {
+
+
+    public UserService(UserDao userDao, IdWorker idWorker, ProductDao productDao) {
         this.userDao = userDao;
         this.idWorker = idWorker;
+        this.productDao = productDao;
     }
 
     public List<User> findAll(){
@@ -40,5 +46,16 @@ public class UserService {
 
     public void delete(String userId) {
         userDao.deleteById(userId);
+    }
+
+    public void assignProduct(String userId, String productId) {
+        //find this product by id from DB
+        Product productToBeAssigned = productDao.findById(productId).get();
+        User user = userDao.findById(userId).get();
+
+        if(productToBeAssigned.getOwner() != null){
+            productToBeAssigned.getOwner().removeProduct(productToBeAssigned);
+        }
+        user.addProduct(productToBeAssigned);
     }
 }

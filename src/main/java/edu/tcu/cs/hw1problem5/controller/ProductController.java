@@ -3,7 +3,6 @@ package edu.tcu.cs.hw1problem5.controller;
 import edu.tcu.cs.hw1problem5.domain.Product;
 import edu.tcu.cs.hw1problem5.domain.Result;
 import edu.tcu.cs.hw1problem5.domain.StatusCode;
-import edu.tcu.cs.hw1problem5.domain.User;
 import edu.tcu.cs.hw1problem5.service.ProductService;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +17,7 @@ public class ProductController {
     public ProductController(ProductService productService) {
         this.productService = productService;
     }
+    @GetMapping
     public Result findAll(){
         List<Product> all = productService.findAll();
         return new Result(true, StatusCode.SUCCESS, "Find All Success", all);
