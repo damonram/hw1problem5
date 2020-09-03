@@ -1,19 +1,19 @@
 package edu.tcu.cs.hw1problem5.domain;
 
-<<<<<<< HEAD
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-=======
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
->>>>>>> master
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,14 +29,6 @@ public class User implements Serializable {
     private List<Product> productsOwned = new ArrayList<>();
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JsonIgnore
-    private Wallet wallet;
-
-    @OneToMany(cascade = CascadeType.ALL,mappedBy="owner")
-    @JsonIgnore
-    private List<Product> productsOwned = new ArrayList<>();
-
-    @OneToOne
     @JsonIgnore
     private Wallet wallet;
 
