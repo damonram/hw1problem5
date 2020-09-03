@@ -4,6 +4,7 @@ import edu.tcu.cs.hw1problem5.dao.ProductDao;
 import edu.tcu.cs.hw1problem5.dao.UserDao;
 import edu.tcu.cs.hw1problem5.domain.Product;
 import edu.tcu.cs.hw1problem5.domain.User;
+import edu.tcu.cs.hw1problem5.domain.Wallet;
 import edu.tcu.cs.hw1problem5.utils.IdWorker;
 import org.springframework.stereotype.Service;
 
@@ -57,5 +58,11 @@ public class UserService {
             productToBeAssigned.getOwner().removeProduct(productToBeAssigned);
         }
         user.addProduct(productToBeAssigned);
+    }
+
+    public int viewBalance(String userId) {
+        User user = userDao.findById(userId).get();
+        Wallet wallet = user.getWallet();
+        return wallet.getBalance();
     }
 }

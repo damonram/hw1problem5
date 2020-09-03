@@ -50,6 +50,10 @@ public class UserController {
         userService.assignProduct(userId, productId);
         return new Result(true, StatusCode.SUCCESS, "Product Assignment Success");
     }
-
+    @GetMapping("/balance/{userId}")
+    public Result viewBalance(@PathVariable String userId){
+        userService.viewBalance(userId);
+        return new Result(true, StatusCode.SUCCESS,"Balance View Success");
+    }
 
 }
