@@ -1,9 +1,13 @@
 package edu.tcu.cs.hw1problem5.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+<<<<<<< HEAD
+
+=======
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.CascadeType;
+>>>>>>> master
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
@@ -19,7 +23,11 @@ public class Wallet implements Serializable {
     private String lastModified;
     private String status;
 
+<<<<<<< HEAD
+    @OneToOne
+=======
     @OneToOne(cascade = CascadeType.ALL)
+>>>>>>> master
     @JsonIgnore
     private User owner;
 
