@@ -25,10 +25,10 @@ public class WalletController {
         return new Result(true, StatusCode.SUCCESS,"Find All Success", all);
     }
 
-    @GetMapping("/wallets/{userId}")
-    public Result findByUserId(@PathVariable String userId){
-        return new Result(true, StatusCode.SUCCESS,"Find By User ID Success", walletService.findByUserId(userId));
-    }
+//    @GetMapping("/wallets/{userId}")
+//    public Result findByUserId(@PathVariable String userId){
+//        return new Result(true, StatusCode.SUCCESS,"Find By User ID Success", walletService.findByUserId(userId));
+//    }
 
     @GetMapping("/wallets/{walletId}")
     public Result findById(@PathVariable String walletId){
@@ -54,14 +54,31 @@ public class WalletController {
         int balance = walletService.viewBalance(walletId);
         return new Result(true, StatusCode.SUCCESS, "Balance View Success",balance);
     }
-    @PutMapping("/wallets/balance/{walletId}/{amount}")
+    @PutMapping("/wallets/deposit/{walletId}/{amount}")
     public Result incBalance(@PathVariable String walletId, @PathVariable int amount){
-        walletService.incBalance(walletId, amount);
-        return new Result(true, StatusCode.SUCCESS, "Balance Increase Success");
+        int num = walletService.incBalance(walletId, amount);
+        if(num == StatusCode.SUCCESS)
+            return new Result(true, StatusCode.SUCCESS, "Balance Increase Success");
+        else
+            return new Result(true, StatusCode.FAILURE, "Balance Increase Failure - Wallet Frozen!");
     }
     @PutMapping("/wallets/withdraw/{walletId}/{amount}")
     public Result decBalance(@PathVariable String walletId, @PathVariable int amount){
-        walletService.decBalance(walletId, amount);
-        return new Result(true, StatusCode.SUCCESS, "Balance Decrease Success");
+        int num = walletService.decBalance(walletId, amount);
+        if(num == StatusCode.SUCCESS)
+            return new Result(true, StatusCode.SUCCESS, "Balance Decrease Success");
+        else
+            return new Result(true, StatusCode.FAILURE, "Balance Decrease Failure - Wallet Frozen!");
     }
+    @PutMapping("/wallets/freeze/{walletId}")
+    public Result freeze(@PathVariable String walletId){
+        walletService.freeze(walletId);
+        return new Result(true, StatusCode.SUCCESS, "Freeze Success");
+    }
+    @PutMapping("/wallets/unfreeze/{walletId}")
+    public Result unfreeze(@PathVariable String walletId){
+        walletService.unfreeze(walletId);
+        return new Result(true, StatusCode.SUCCESS, "Unfreeze Success");
+    }
+
 }
