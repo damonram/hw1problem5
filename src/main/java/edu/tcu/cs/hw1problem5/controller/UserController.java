@@ -45,12 +45,20 @@ public class UserController {
         return new Result(true, StatusCode.SUCCESS, "Delete Success");
 
     }
-    @PutMapping("/{userId}/{productId}")
+    @PutMapping("/assignProduct/{userId}/{productId}")
     public Result assignProduct(@PathVariable String userId, @PathVariable String productId){
         userService.assignProduct(userId, productId);
         return new Result(true, StatusCode.SUCCESS, "Product Assignment Success");
     }
 
-
+    @PutMapping("/transaction/{userId}/{userId2}/{productId}")
+    public Result transaction(@PathVariable String userId,@PathVariable String userId2,
+                              @PathVariable String productId){
+        String message = userService.transaction(userId, userId2, productId);
+        if(message == "Transaction Success")
+            return new Result(true, StatusCode.SUCCESS,message);
+        else
+            return new Result(true, StatusCode.FAILURE,message);
+    }
 
 }

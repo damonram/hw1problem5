@@ -25,14 +25,14 @@ public class DBDataInitializer implements CommandLineRunner {
     public void run(String... args) throws Exception{
         Product p1 = new Product();
         p1.setId("1");
-        p1.setPrice("20");
+        p1.setPrice(20);
         p1.setStatus("Available");
         p1.setName("AM1");
         p1.setOwner(null);
 
         Product p2 = new Product();
         p2.setId("2");
-        p2.setPrice("15");
+        p2.setPrice(15);
         p2.setStatus("Available");
         p2.setName("AF1");
         p2.setOwner(null);

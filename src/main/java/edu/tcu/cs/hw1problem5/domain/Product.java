@@ -11,7 +11,7 @@ import java.io.Serializable;
 public class Product implements Serializable {
     @Id
     private String id;
-    private String price;
+    private int price;
     private String status;
     private String name;
 
@@ -38,11 +38,11 @@ public class Product implements Serializable {
         this.id = id;
     }
 
-    public String getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 
