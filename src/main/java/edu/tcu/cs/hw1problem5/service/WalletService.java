@@ -44,4 +44,16 @@ public class WalletService {
 
     public void delete(String walletId) {walletDao.deleteById(walletId);
     }
+
+    public int viewBalance(String walletId) {
+        Wallet wallet = walletDao.findById(walletId).get();
+        return wallet.getBalance();
+    }
+
+    public void incBalance(String walletId, int amount) {
+        Wallet wallet = walletDao.findById(walletId).get();
+        int temp = wallet.getBalance();
+        temp = temp + amount;
+        wallet.setBalance(temp);
+    }
 }
