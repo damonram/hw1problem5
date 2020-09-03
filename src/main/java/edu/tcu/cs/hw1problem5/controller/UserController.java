@@ -51,10 +51,10 @@ public class UserController {
         return new Result(true, StatusCode.SUCCESS, "Product Assignment Success");
     }
 
-    @PutMapping("/transaction/{userId}/{userId2}/{productId}")
-    public Result transaction(@PathVariable String userId,@PathVariable String userId2,
+    @PutMapping("/transaction/{buyerId}/{sellerId}/{productId}")
+    public Result transaction(@PathVariable String buyerId,@PathVariable String sellerId,
                               @PathVariable String productId){
-        String message = userService.transaction(userId, userId2, productId);
+        String message = userService.transaction(buyerId, sellerId, productId);
         if(message == "Transaction Success")
             return new Result(true, StatusCode.SUCCESS,message);
         else
