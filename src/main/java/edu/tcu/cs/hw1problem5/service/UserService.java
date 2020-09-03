@@ -18,14 +18,16 @@ public class UserService {
     private UserDao userDao;
     private IdWorker idWorker;
     private ProductDao productDao;
+    private WalletService walletService;
 
     //Spring will automatically inject an instance of UserDao and IdWorker into this class
 
 
-    public UserService(UserDao userDao, IdWorker idWorker, ProductDao productDao) {
+    public UserService(UserDao userDao, IdWorker idWorker, ProductDao productDao, WalletService walletService) {
         this.userDao = userDao;
         this.idWorker = idWorker;
         this.productDao = productDao;
+        this.walletService = walletService;
     }
 
     public List<User> findAll(){
@@ -58,19 +60,36 @@ public class UserService {
             productToBeAssigned.getOwner().removeProduct(productToBeAssigned);
         }
         user.addProduct(productToBeAssigned);
+        //productToBeAssigned.setOwner(user);
+        productToBeAssigned.setStatus("Owned by " + user.getName());
     }
 
-//    public int viewBalance(String userId) {
-//        User user = userDao.findById(userId).get();
-//        Wallet wallet = user.getWallet();
-//        return wallet.getBalance();
-//    }
+    public String transaction(String userId, String userId2, String productId) {
+        User buyer = userDao.findById(userId).get();
+        User seller = userDao.findById(userId2).get();
+        Product product = productDao.findById(productId).get();
+        //check if seller has product
+        if(product.getOwner() == seller){
+            int price = product.getPrice();
+            Wallet bWallet = buyer.getWallet();
+            Wallet sWallet = seller.getWallet();
+            //check if either wallet frozen
+            if(bWallet.getStatus()=="Frozen")
+                return bWallet.getOwner().getName() + " wallet frozen";
+            else if(sWallet.getStatus()=="Frozen")
+                return sWallet.getOwner().getName() + " wallet frozen";
+            //check if buyer has enough money
+            else if(bWallet.getBalance()>=price){
+                walletService.decBalance(bWallet.getId(),price);    //take money from buyer
+                walletService.incBalance(sWallet.getId(),price);    //give money to seller
+                assignProduct(userId,productId);                    //seller gives buyer product
+                return "Transaction Success";
+            }
+            else
+                return "Buyer does not have sufficient funds";
+        }
+        else
+            return "Seller does not have specified product";
+    }
 
-//    public void increaseBalance(String userId, int amount) {
-//        User user = userDao.findById(userId).get();
-//        Wallet wallet = user.getWallet();
-//        int temp = wallet.getBalance();
-//        temp = temp + amount;
-//        wallet.setBalance(temp);
-//    }
 }
