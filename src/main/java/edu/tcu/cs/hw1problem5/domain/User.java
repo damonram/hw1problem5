@@ -41,7 +41,9 @@ public class User implements Serializable {
     }
 
     public void setWallet(Wallet wallet) {
+        wallet.setOwner(this);
         this.wallet = wallet;
+
     }
 
     public String getId() {
