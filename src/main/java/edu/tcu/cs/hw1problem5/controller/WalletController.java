@@ -49,5 +49,15 @@ public class WalletController {
         walletService.delete(walletId);
         return new Result(true, StatusCode.SUCCESS, "Delete Success");
     }
+    @GetMapping("/wallets/balance/{walletId}")
+    public Result viewBalance(@PathVariable String walletId){
+        int balance = walletService.viewBalance(walletId);
+        return new Result(true, StatusCode.SUCCESS, "Balance View Success",balance);
+    }
+    @PutMapping("/wallets/balance/{walletId}/{amount}")
+    public Result incBalance(@PathVariable String walletId, @PathVariable int amount){
+        walletService.incBalance(walletId, amount);
+        return new Result(true, StatusCode.SUCCESS, "Balance Increase Success");
+    }
 
 }

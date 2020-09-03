@@ -60,9 +60,17 @@ public class UserService {
         user.addProduct(productToBeAssigned);
     }
 
-    public int viewBalance(String userId) {
-        User user = userDao.findById(userId).get();
-        Wallet wallet = user.getWallet();
-        return wallet.getBalance();
-    }
+//    public int viewBalance(String userId) {
+//        User user = userDao.findById(userId).get();
+//        Wallet wallet = user.getWallet();
+//        return wallet.getBalance();
+//    }
+
+//    public void increaseBalance(String userId, int amount) {
+//        User user = userDao.findById(userId).get();
+//        Wallet wallet = user.getWallet();
+//        int temp = wallet.getBalance();
+//        temp = temp + amount;
+//        wallet.setBalance(temp);
+//    }
 }
