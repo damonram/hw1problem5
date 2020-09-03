@@ -1,6 +1,7 @@
 package edu.tcu.cs.hw1problem5.service;
 
 import edu.tcu.cs.hw1problem5.dao.WalletDao;
+import edu.tcu.cs.hw1problem5.domain.StatusCode;
 import edu.tcu.cs.hw1problem5.domain.User;
 import edu.tcu.cs.hw1problem5.domain.Wallet;
 import edu.tcu.cs.hw1problem5.utils.IdWorker;
@@ -24,11 +25,11 @@ public class WalletService {
     public List<Wallet> findAll() {return walletDao.findAll();
     }
 
-    public Wallet findByUserId(String userId) {
-        return walletDao.findById(userId).get();
-    }
+//    public Wallet findByUserId(String userId) {
+//        return walletDao.findById(userId).get();
+//    }
 
-    public Object findById(String walletId) {
+    public Wallet findById(String walletId) {
         return walletDao.findById(walletId).get();
     }
 
@@ -50,17 +51,37 @@ public class WalletService {
         return wallet.getBalance();
     }
 
-    public void incBalance(String walletId, int amount) {
+    public int incBalance(String walletId, int amount) {
         Wallet wallet = walletDao.findById(walletId).get();
-        int temp = wallet.getBalance();
-        temp = temp + amount;
-        wallet.setBalance(temp);
+        if(wallet.getStatus() != "Frozen"){
+            int temp = wallet.getBalance();
+            temp = temp + amount;
+            wallet.setBalance(temp);
+            return StatusCode.SUCCESS;
+        }
+        else
+            return StatusCode.FAILURE;
     }
 
-    public void decBalance(String walletId, int amount) {
+    public int decBalance(String walletId, int amount) {
         Wallet wallet = walletDao.findById(walletId).get();
-        int temp = wallet.getBalance();
-        temp = temp - amount;
-        wallet.setBalance(temp);
+        if(wallet.getStatus() != "Frozen"){
+            int temp = wallet.getBalance();
+            temp = temp - amount;
+            wallet.setBalance(temp);
+            return StatusCode.SUCCESS;
+        }
+        else
+            return StatusCode.FAILURE;
+    }
+
+    public void freeze(String walletId) {
+        Wallet wallet = walletDao.findById(walletId).get();
+        wallet.setStatus("Frozen");
+    }
+
+    public void unfreeze(String walletId) {
+        Wallet wallet = walletDao.findById(walletId).get();
+        wallet.setStatus("Unfrozen");
     }
 }
