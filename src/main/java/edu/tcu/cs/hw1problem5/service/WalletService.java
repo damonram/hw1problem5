@@ -56,4 +56,11 @@ public class WalletService {
         temp = temp + amount;
         wallet.setBalance(temp);
     }
+
+    public void decBalance(String walletId, int amount) {
+        Wallet wallet = walletDao.findById(walletId).get();
+        int temp = wallet.getBalance();
+        temp = temp - amount;
+        wallet.setBalance(temp);
+    }
 }

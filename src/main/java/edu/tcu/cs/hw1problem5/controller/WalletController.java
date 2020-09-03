@@ -59,5 +59,9 @@ public class WalletController {
         walletService.incBalance(walletId, amount);
         return new Result(true, StatusCode.SUCCESS, "Balance Increase Success");
     }
-
+    @PutMapping("/wallets/withdraw/{walletId}/{amount}")
+    public Result decBalance(@PathVariable String walletId, @PathVariable int amount){
+        walletService.decBalance(walletId, amount);
+        return new Result(true, StatusCode.SUCCESS, "Balance Decrease Success");
+    }
 }
